@@ -31,6 +31,8 @@ services:
       - BBB_STREAM_URL=rtmp://media_server_url/stream/stream_key
       # Message to post in BBB Chat when joining a conference
       - BBB_CHAT_MESSAGE=This meeting is streamed to
+      # post the viewing URL for the STREAM in the BBB chat (Default: "Secret URL")
+      - BBB_STREAMVIEW_URL=https://yourStream.url
       # Resolution to be streamed/downloaded in format WxH (default 1920x1080)
       - BBB_RESOLUTION=1920x1080
       # stream video bitrate

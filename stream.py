@@ -42,6 +42,7 @@ parser.add_argument("-u","--user", help="Name to join the meeting",default="Live
 parser.add_argument("-t","--target", help="RTMP Streaming URL")
 parser.add_argument("--chatUrl", help="Streaming URL to display in the chat", default=False)
 parser.add_argument("--chatMsg", nargs='+', help="Message to display in the chat before Streaming URL", default=False)
+parser.add_argument("--streamviewUrl", help="Streaming View URL do display in the chat", default=False)
 parser.add_argument("-c","--chat", help="Show the chat",action="store_true")
 parser.add_argument("-r","--resolution", help="Resolution as WxH", default='1920x1080')
 parser.add_argument('--ffmpeg-stream-threads', help='Threads to use for ffmpeg streaming', type=int,
@@ -148,13 +149,16 @@ def bbb_browser():
         # ensure chat is enabled (might be locked by moderator)
         if element.is_enabled() and chat_send.is_enabled():
            tmp_chatMsg = os.environ.get('BBB_CHAT_MESSAGE', "This meeting is streamed to")
+           tmp_streamviewUrl = os.environ.get('BBB_STREAMVIEW_URL', "Secret URL")
            if not tmp_chatMsg in [ 'false', 'False', 'FALSE' ]:
                tmp_chatUrl = args.target.partition('//')[2].partition('/')[0]
                if args.chatUrl:
                    tmp_chatUrl = args.chatUrl
+               if args.streamviewUrl:
+                   tmp_streamviewUrl = args.streamviewUrl
                if args.chatMsg:
                    tmp_chatMsg = ' '.join(args.chatMsg).strip('"')
-               element.send_keys("{0}: {1}".format(tmp_chatMsg, tmp_chatUrl))
+               element.send_keys("{0}: {1} {2}".format(tmp_chatMsg, tmp_chatUrl, tmp_streamviewUrl))
                chat_send.click()
 
         if args.chat:
