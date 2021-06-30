@@ -136,7 +136,7 @@ def bbb_browser():
     logging.info(join_url)
     browser.get(join_url)
 
-
+    time.sleep(40)
     try:
         # Wait for the input element to appear
         logging.info("Waiting for chat input window to appear.")
